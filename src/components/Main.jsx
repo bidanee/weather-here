@@ -6,10 +6,7 @@ export default function Main() {
   return (
     <main className="w-full flex items-center justify-center h-full">
       <div className="w-[32rem] flex flex-col p-2 border-2">
-        <div className="flex items-center justify-center">
-          <div className="mx-2 text-4xl my-2">여기 날씨</div>
-          <LocationDialog />
-        </div>
+        <LocationDialog />
         <div className="w-full flex justify-end mb-4">
           <div className="flex items-center border-black bg-blue-800 w-[6rem] rounded-full p-1 mr-4">
             <img
