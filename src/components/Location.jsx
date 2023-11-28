@@ -5,11 +5,12 @@ import { useRecoilState } from "recoil";
 import { firstNameState, secondNameState } from "../recoil/atom";
 import { IoIosArrowDown } from "react-icons/io";
 import { MdOutlineMyLocation } from "react-icons/md";
-import Weather from "./Weather";
+import { FaSearchLocation } from "react-icons/fa";
 
-export function LocationDialog() {
+export function Location() {
   const [firstName, setFirstName] = useRecoilState(firstNameState);
   const [secondName, setSecondName] = useRecoilState(secondNameState);
+
   const [open, setOpen] = useState(false);
   const [sido, setSido] = useState(false);
   const [gugun, setGugun] = useState(false);
@@ -24,24 +25,21 @@ export function LocationDialog() {
     ),
   ];
 
-  /* jsonData.find((x) => {
-    if (secondName === "" && x.first === firstName) {
-      return console.log([x.nx, x.ny]);
-    } else if (x.first === firstName && x.second === secondName) {
-      return console.log([x.nx, x.ny]);
-    }
-  }); */
   return (
     <div className="relative flex items-center justify-center">
       <div className=" flex justify-center items-center">
         <div
-          className=" mx-2 text-2xl my-2 cursor-pointer"
+          className="flex justify-center items-center mx-2 text-2xl my-2 cursor-pointer"
           onClick={() => setOpen(!open)}
         >
-          {firstName} {secondName}
+          <span className="text-xl mr-1">현재 위치 :</span>
+          <span className=" font-bold">
+            {firstName} {secondName}
+          </span>
         </div>
         <button className=" btn btn-sm p-1 btn-outline">
-          <div>
+          <div className="flex justify-center items-center">
+            <span className="mr-1">내 위치</span>
             <MdOutlineMyLocation className="text-xl leading-6 cursor-pointer" />
           </div>
         </button>
@@ -99,7 +97,9 @@ export function LocationDialog() {
                 </ul>
               ) : null}
             </div>
-            <Weather />
+            <button className="border-black btn btn-sm btn-square btn-outline btn-info">
+              <FaSearchLocation className="text-xl leading-6 text-black cursor-pointer" />
+            </button>
           </div>
         ) : null}
       </div>
