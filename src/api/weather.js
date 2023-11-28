@@ -4,8 +4,8 @@ const weatherAPI = axios.create({
   baseURL: `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst`,
 });
 
-const timeTransform = () => {
-  const current = new Date(Date.now());
+export const timeTransform = () => {
+  const current = new Date(Date.now() - 1000 * 60 * 60);
   const hour = current.getHours();
   let date = `${current.getFullYear()}${
     current.getMonth() + 1
@@ -40,12 +40,30 @@ const timeTransform = () => {
   return [date, time()];
 };
 
-export const getWeatherInformation = async (nx, ny) => {
-  const [base_date, base_time] = timeTransform();
+export const getWeatherInfo = async (base_date, base_time, nx, ny) => {
   const response = await weatherAPI({
     params: {
       serviceKey: import.meta.env.VITE_API_KEY,
-      numOfRows: "36",
+      numOfRows: "288",
+      pageNo: "1",
+      base_date: base_date,
+      base_time: base_time,
+      nx: nx,
+      ny: ny,
+      dataType: "JSON",
+    },
+  });
+
+  return response.data?.response?.body?.items?.item;
+};
+
+export const highestLowest = async (nx, ny) => {
+  const base_date = `${new Date().getDate() - 1}`;
+  const base_time = "2300";
+  const res = await weatherAPI({
+    params: {
+      serviceKey: import.meta.env.VITE_API_KEY,
+      numOfRows: "288",
       pageNo: "1",
       base_date,
       base_time,
@@ -54,5 +72,5 @@ export const getWeatherInformation = async (nx, ny) => {
       dataType: "JSON",
     },
   });
-  return response.data.response.body.items.item;
+  return res.data.response.body.items.item;
 };
