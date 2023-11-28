@@ -9,3 +9,8 @@ export const secondNameState = atom({
   key: "Second",
   default: "강남구",
 });
+
+export const weatherDataState = atom({
+  key: "WeatherData",
+  default: {},
+});
