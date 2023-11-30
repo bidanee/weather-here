@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import jsonData from "../json/objectData.json";
+import jsonData from "../../json/objectData.json";
 import { useRecoilState } from "recoil";
-import { firstNameState, secondNameState } from "../recoil/atom";
+import { firstNameState, secondNameState } from "../../recoil/atom";
 import { IoIosArrowDown } from "react-icons/io";
 import { MdOutlineMyLocation } from "react-icons/md";
 import { FaSearchLocation } from "react-icons/fa";

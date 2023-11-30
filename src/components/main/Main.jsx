@@ -1,4 +1,5 @@
-import { Location } from "../Location";
+import { Location } from "../location/Location";
+import OneDays from "../weather/OneDayWeather";
 import TodayWeather from "../weather/TodayWeather";
 
 export default function Main() {
@@ -18,22 +19,7 @@ export default function Main() {
         </div>
         <div>
           <TodayWeather />
-          <div>
-            <div className="flex justify-center p-2">
-              <button className=" focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 ">
-                기온
-              </button>
-              <button className=" focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 ">
-                강수
-              </button>
-              <button className=" focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 ">
-                바람
-              </button>
-              <button className=" focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 ">
-                습도
-              </button>
-            </div>
-          </div>
+          <OneDays />
         </div>
       </div>
     </main>

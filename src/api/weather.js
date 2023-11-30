@@ -57,20 +57,19 @@ export const getWeatherInfo = async (base_date, base_time, nx, ny) => {
   return response.data?.response?.body?.items?.item;
 };
 
-export const highestLowest = async (nx, ny) => {
-  const base_date = `${new Date().getDate() - 1}`;
-  const base_time = "2300";
-  const res = await weatherAPI({
+export const getThreeDaysInfo = async (base_date, base_time, nx, ny) => {
+  const response = await weatherAPI({
     params: {
       serviceKey: import.meta.env.VITE_API_KEY,
-      numOfRows: "288",
+      numOfRows: "1000",
       pageNo: "1",
-      base_date,
-      base_time,
+      base_date: base_date,
+      base_time: base_time,
       nx: nx,
       ny: ny,
       dataType: "JSON",
     },
   });
-  return res.data.response.body.items.item;
+
+  return response.data?.response?.body?.items?.item;
 };
