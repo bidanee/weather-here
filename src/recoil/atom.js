@@ -14,3 +14,8 @@ export const weatherDataState = atom({
   key: "WeatherData",
   default: {},
 });
+
+export const OneDaysState = atom({
+  key: "OneDayData",
+  default: {},
+});

@@ -24,8 +24,7 @@ export default function TodayWeather() {
     today.getMonth() + 1
   }월 ${today.getDate()}일 ${day()}요일 ${today.getHours()}:00`;
   const fcstTime = () => {
-    if (today.getHours() === 0) return "0000";
-    if (today.getHours().length === 1) return `0${today.getHours()}00`;
+    if (today.getHours() < 10) return `0${today.getHours()}00`;
     return `${today.getHours()}00`;
   };
 
@@ -67,7 +66,6 @@ export default function TodayWeather() {
     };
     fetchData();
   }, []);
-  console.log(skyImgSrc[Number(data?.PTY) + 3]);
   return (
     <div className="flex flex-col m-4 justify-center">
       <div className="flex text-xl justify-center items-center">
