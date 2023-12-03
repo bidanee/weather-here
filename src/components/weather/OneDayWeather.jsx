@@ -1,13 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getThreeDaysInfo, timeTransform } from "../../api/weather";
 import { useRecoilState } from "recoil";
-import { OneDaysState } from "../../recoil/atom";
-import TmpChart from "./chart";
-
-// import TmpChart from "./chart";
+import { OneDaysState, nxnyState } from "../../recoil/atom";
+import { TmpChart, PopChart, RehChart } from "./chart";
 
 export default function OneDays() {
-  const [oneDays, setOneDays] = useRecoilState(OneDaysState);
+  const [loading, setLoading] = useState(true);
+  const [, setOneDays] = useRecoilState(OneDaysState);
+  const [nxny] = useRecoilState(nxnyState);
+  const [category, setCategory] = useState("tmp");
   const [base_date, base_time] = timeTransform();
   const currentHours = new Date();
   const currentHour = () => {
@@ -22,10 +23,12 @@ export default function OneDays() {
         const nowResponse = await getThreeDaysInfo(
           base_date,
           base_time,
-          "61",
-          "125"
+          nxny[0],
+          nxny[1]
         );
-        const dataSet = nowResponse.filter((x) => currentHour() < x.fcstTime);
+        const dataSet = nowResponse?.filter(
+          (x) => currentHour() < x.fcstTime || x.fcstDate > base_date
+        );
         const tmpDataSet = dataSet
           .filter((x) => x.category === "TMP")
           .slice(0, 12);
@@ -44,29 +47,57 @@ export default function OneDays() {
 
         oneDayData["reh"] = rehDataSet.map((x) => x.fcstValue);
         setOneDays(oneDayData);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     };
     fetchData();
-  }, []);
+  }, [nxny]);
   return (
-    <div className="flex flex-col">
-      <div className="flex justify-center p-2">
-        <button className=" focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 ">
-          기온
-        </button>
-        <button className=" focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 ">
-          강수
-        </button>
-        <button className=" focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 ">
-          바람
-        </button>
-        <button className=" focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 ">
-          습도
-        </button>
-      </div>
-      <TmpChart />
-    </div>
+    <>
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <span className="loading loading-ball loading-xs"></span>
+          <span className="loading loading-ball loading-sm"></span>
+          <span className="loading loading-ball loading-md"></span>
+          <span className="loading loading-ball loading-lg"></span>
+        </div>
+      ) : (
+        <div className="flex flex-col">
+          <div className="flex justify-center p-2 mb-2">
+            <button
+              className=" focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 "
+              onClick={() => setCategory("tmp")}
+            >
+              기온
+            </button>
+            <button
+              className=" focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 "
+              onClick={() => setCategory("pop")}
+            >
+              강수
+            </button>
+
+            <button
+              className=" focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 "
+              onClick={() => setCategory("reh")}
+            >
+              습도
+            </button>
+          </div>
+          <div className="mb-4">
+            {category === "tmp" ? (
+              <TmpChart />
+            ) : category === "pop" ? (
+              <PopChart />
+            ) : (
+              <RehChart />
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

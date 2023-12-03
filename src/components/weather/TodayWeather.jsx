@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { getWeatherInfo, timeTransform } from "../../api/weather";
 import { day } from "./day";
 import { useRecoilState } from "recoil";
-import { weatherDataState } from "../../recoil/atom";
+import { nxnyState, weatherDataState } from "../../recoil/atom";
 
 export default function TodayWeather() {
   const [base_date, base_time] = timeTransform();
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useRecoilState(weatherDataState);
+  const [nxny] = useRecoilState(nxnyState);
   const [highLow, setHighLow] = useState([]);
   const sky = ["맑음", "구름 적음", "구름 많음", "흐림"];
   const skyImgSrc = [
@@ -27,7 +29,6 @@ export default function TodayWeather() {
     if (today.getHours() < 10) return `0${today.getHours()}00`;
     return `${today.getHours()}00`;
   };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,8 +36,8 @@ export default function TodayWeather() {
         const nowResponse = await getWeatherInfo(
           base_date,
           base_time,
-          "61",
-          "125"
+          nxny[0],
+          nxny[1]
         );
         const dataSet = nowResponse.filter((x) => x.fcstTime === fcstTime());
         dataSet.forEach(
@@ -46,8 +47,8 @@ export default function TodayWeather() {
         const highLowRes = await getWeatherInfo(
           `${Number(base_date) - 1}`,
           "2300",
-          "61",
-          "125"
+          nxny[0],
+          nxny[1]
         );
         const highLowData = highLowRes.filter((x) => {
           return (
@@ -60,52 +61,71 @@ export default function TodayWeather() {
           (value) => (highLowObj[value.category] = value.fcstValue)
         );
         setHighLow(highLowObj);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     };
     fetchData();
-  }, []);
+  }, [nxny]);
   return (
-    <div className="flex flex-col m-4 justify-center">
-      <div className="flex text-xl justify-center items-center">
-        <span className="mr-2">{date}</span>
-        {sky[Number(data?.SKY) - 1]}
-      </div>
-      <div className="flex justify-center">
-        <div className="flex justify-center items-center p-2">
-          {data?.PTY === "0" ? (
-            <img src={skyImgSrc[Number(data?.SKY) - 1]} className="w-[5rem]" />
-          ) : (
-            <img src={skyImgSrc[Number(data?.PTY) + 3]} className="w-[5rem]" />
-          )}
+    <div className="flex flex-col m-4 justify-center h-[14.5rem]">
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <span className="loading loading-ball loading-xs"></span>
+          <span className="loading loading-ball loading-sm"></span>
+          <span className="loading loading-ball loading-md"></span>
+          <span className="loading loading-ball loading-lg"></span>
+        </div>
+      ) : (
+        <div>
+          <div className="flex text-xl justify-center items-center">
+            <span className="mr-2">{date}</span>
+            {sky[Number(data?.SKY) - 1]}
+          </div>
+          <div className="flex justify-center">
+            <div className="flex justify-center items-center p-2">
+              {data?.PTY === "0" ? (
+                <img
+                  src={skyImgSrc[Number(data?.SKY) - 1]}
+                  className="w-[5rem]"
+                />
+              ) : (
+                <img
+                  src={skyImgSrc[Number(data?.PTY) + 3]}
+                  className="w-[5rem]"
+                />
+              )}
 
-          {Number(data?.TMP) > 0 ? (
-            <span className="text-[4rem] ml-3 font-bold text-red-500">
-              {data?.TMP}°
-            </span>
-          ) : (
-            <span className="text-[4rem] ml-3 font-bold text-blue-500">
-              {data?.TMP}°
-            </span>
-          )}
-          <div className="flex text-sm flex-col justify-center ml-2 items-center">
-            <div>
-              <span className=" mt-1 ml-2">최고기온 : </span>
-              <span className="ml-1">{highLow?.TMX}°</span>
-            </div>
-            <div>
-              <span className=" mt-1 ml-2">최저기온 : </span>
-              <span className="ml-1">{highLow?.TMN}°</span>
+              {Number(data?.TMP) > 0 ? (
+                <span className="text-[4rem] ml-3 font-bold text-red-500">
+                  {data?.TMP}°
+                </span>
+              ) : (
+                <span className="text-[4rem] ml-3 font-bold text-blue-500">
+                  {data?.TMP}°
+                </span>
+              )}
+              <div className="flex text-sm flex-col ml-2 ">
+                <div className="flex justify-between ">
+                  <span>최고기온 : </span>
+                  <span className="ml-2 ">{highLow?.TMX}°</span>
+                </div>
+                <div className="flex justify-between ">
+                  <span>최저기온 : </span>
+                  <span className="ml-2">{highLow?.TMN}°</span>
+                </div>
+              </div>
             </div>
           </div>
+          <div className="flex text-sm justify-center items-center">
+            <span className="mr-2">강수 확률 : {data?.POP}%</span>
+            <span className="mr-2">습도 : {data?.REH}%</span>
+            <span className=" ">풍속 : {data?.WSD} m/s</span>
+          </div>
         </div>
-      </div>
-      <div className="flex text-sm justify-center items-center">
-        <span className="mr-2">강수 확률 : {data?.POP}%</span>
-        <span className="mr-2">습도 : {data?.REH}%</span>
-        <span className=" ">풍속 : {data?.WSD} m/s</span>
-      </div>
+      )}
     </div>
   );
 }
