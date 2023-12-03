@@ -24,11 +24,9 @@ export function Location() {
   const first = [...new Set(jsonData.map((x) => x.first))];
   const second = [
     ...new Set(
-      jsonData.map((x) => {
-        if (x.first === firstName) {
-          return x.second;
-        }
-      })
+      jsonData
+        .filter((x) => x.first === firstName && x.second) // undefined를 필터링
+        .map((x) => x.second)
     ),
   ];
   const findNxny = jsonData.find(

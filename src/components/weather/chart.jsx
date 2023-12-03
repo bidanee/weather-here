@@ -87,8 +87,8 @@ export const TmpChart = () => {
       },
       y: {
         display: false,
-        max: maxMin[0],
-        min: maxMin[1],
+        max: tmpValue ? maxMin[0] : 20,
+        min: tmpValue ? maxMin[1] : -20,
         ticks: {
           stepSize: 1,
           display: false,
