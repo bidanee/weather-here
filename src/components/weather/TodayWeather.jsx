@@ -39,7 +39,7 @@ export default function TodayWeather() {
           nxny[0],
           nxny[1]
         );
-        const dataSet = nowResponse.filter((x) => x.fcstTime === fcstTime());
+        const dataSet = nowResponse?.filter((x) => x.fcstTime === fcstTime());
         dataSet.forEach(
           (value) => (weatherData[value.category] = value.fcstValue)
         );
