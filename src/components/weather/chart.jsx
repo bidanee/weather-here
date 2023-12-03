@@ -37,9 +37,6 @@ for (let i = 0; i < 12; i++) {
 export const TmpChart = () => {
   const [oneDayData] = useRecoilState(OneDaysState);
   const tmpValue = oneDayData?.tmp;
-  const num = tmpValue?.map((x) => Number(x)).sort();
-  const max = num[num?.length - 1] + 1;
-  const min = num[0] - 1;
 
   const tmpData = {
     labels: labels,
@@ -89,8 +86,6 @@ export const TmpChart = () => {
       },
       y: {
         display: false,
-        max: max,
-        min: min,
         ticks: {
           stepSize: 1,
           display: false,
