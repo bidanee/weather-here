@@ -7,9 +7,10 @@ const weatherAPI = axios.create({
 export const timeTransform = () => {
   const current = new Date(Date.now() - 1000 * 60 * 60);
   const hour = current.getHours();
-  let date = `${current.getFullYear()}${
-    current.getMonth() + 1
-  }${current.getDate()}`;
+  const day = current.getDate();
+  let date = `${current.getFullYear()}${current.getMonth() + 1}${
+    day < 10 ? `0${day}` : day
+  }`;
   if (hour === 0 || hour === 1) {
     date = `${current.getFullYear()}${current.getMonth() + 1}${
       current.getDate() - 1
