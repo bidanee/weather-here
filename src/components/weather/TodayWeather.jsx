@@ -40,7 +40,7 @@ export default function TodayWeather() {
           nxny[1]
         );
         const dataSet = nowResponse?.filter((x) => x.fcstTime === fcstTime());
-        dataSet.forEach(
+        dataSet?.forEach(
           (value) => (weatherData[value.category] = value.fcstValue)
         );
         setData(weatherData);
@@ -57,7 +57,7 @@ export default function TodayWeather() {
           );
         });
         let highLowObj = {};
-        highLowData.forEach(
+        highLowData?.forEach(
           (value) => (highLowObj[value.category] = value.fcstValue)
         );
         setHighLow(highLowObj);
