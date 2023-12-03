@@ -80,6 +80,9 @@ export const TmpChart = () => {
     },
     scales: {
       x: {
+        margin: {
+          top: 20,
+        },
         grid: {
           display: false,
         },
@@ -98,6 +101,11 @@ export const TmpChart = () => {
     responsive: true,
     maintainAspectRatio: false,
     height: "10rem",
+    layout: {
+      padding: {
+        top: 20,
+      },
+    },
   };
 
   return (

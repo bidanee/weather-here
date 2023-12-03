@@ -68,20 +68,20 @@ export default function OneDays() {
         <div className="flex flex-col">
           <div className="flex justify-center p-2 mb-2">
             <button
-              className=" focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 "
+              className="btn  focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 hover:text-black"
               onClick={() => setCategory("tmp")}
             >
               기온
             </button>
             <button
-              className=" focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 "
+              className="btn focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 "
               onClick={() => setCategory("pop")}
             >
               강수
             </button>
 
             <button
-              className=" focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 "
+              className="btn focus:border-blue-300 focus:border-b-2 focus:font-bold mx-4 text-xl hover:bg-gray-100 "
               onClick={() => setCategory("reh")}
             >
               습도

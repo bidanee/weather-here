@@ -12,14 +12,14 @@ export default function TodayWeather() {
   const [highLow, setHighLow] = useState([]);
   const sky = ["맑음", "구름 적음", "구름 많음", "흐림"];
   const skyImgSrc = [
-    "public/img/sunny.png",
-    "public/img/cloudOne.png",
-    "public/img/cloudTwo.png",
-    "public/img/cloudy.png",
-    "public/img/rain.png",
-    "public/img/rainSnow.png",
-    "public/img/snow.png",
-    "public/img/shower.png",
+    "/img/sunny.png",
+    "/img/cloudOne.png",
+    "/img/cloudTwo.png",
+    "/img/cloudy.png",
+    "/img/rain.png",
+    "/img/rainSnow.png",
+    "/img/snow.png",
+    "/img/shower.png",
   ];
   const today = new Date();
   const date = `${
