@@ -33,19 +33,19 @@ export default function OneDays() {
           ?.filter((x) => x.category === "TMP")
           .slice(0, 12);
         const oneDayData = {};
-        oneDayData["tmp"] = tmpDataSet.map((x) => x.fcstValue);
+        oneDayData["tmp"] = tmpDataSet?.map((x) => x.fcstValue);
 
         const popDataSet = dataSet
           ?.filter((x) => x.category === "POP")
           .slice(0, 12);
 
-        oneDayData["pop"] = popDataSet.map((x) => x.fcstValue);
+        oneDayData["pop"] = popDataSet?.map((x) => x.fcstValue);
 
         const rehDataSet = dataSet
           ?.filter((x) => x.category === "REH")
           .slice(0, 12);
 
-        oneDayData["reh"] = rehDataSet.map((x) => x.fcstValue);
+        oneDayData["reh"] = rehDataSet?.map((x) => x.fcstValue);
         setOneDays(oneDayData);
         setLoading(false);
       } catch (error) {

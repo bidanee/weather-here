@@ -50,7 +50,7 @@ export default function TodayWeather() {
           nxny[0],
           nxny[1]
         );
-        const highLowData = highLowRes.filter((x) => {
+        const highLowData = highLowRes?.filter((x) => {
           return (
             (x.fcstTime !== "2300" && x.category === "TMN") ||
             (x.fcstTime !== "2300" && x.category === "TMX")
