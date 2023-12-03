@@ -17,9 +17,10 @@ export function Location() {
   const [firstName, setFirstName] = useRecoilState(firstNameState);
   const [secondName, setSecondName] = useRecoilState(secondNameState);
   const [open, setOpen] = useRecoilState(locationOpenState);
+  const [modal, setModal] = useState(false);
   const [sido, setSido] = useState(false);
   const [gugun, setGugun] = useState(false);
-  const [nxny, setNxny] = useRecoilState(nxnyState);
+  const [, setNxny] = useRecoilState(nxnyState);
   const first = [...new Set(jsonData.map((x) => x.first))];
   const second = [
     ...new Set(
@@ -34,14 +35,23 @@ export function Location() {
     (x) => x.first === firstName && x.second === secondName
   );
   const locationClick = () => {
-    setOpen(false);
-    setNxny([`${findNxny?.nx}`, `${findNxny?.ny}`]);
-    setFirstName(findNxny.first);
-    setSecondName(findNxny.second);
+    if (!!secondName === false && second.length > 2) {
+      setModal(true);
+      document.getElementById("my_modal_1").showModal();
+      setTimeout(() => {
+        document.getElementById("my_modal_1").close();
+      }, 1000);
+    } else {
+      setOpen(false);
+      setNxny([`${findNxny?.nx}`, `${findNxny?.ny}`]);
+      setFirstName(findNxny.first);
+      setSecondName(findNxny.second);
+    }
   };
   const currentLocationClick = () => {
     setOpen(true);
   };
+
   return (
     <div className="relative flex items-center justify-center">
       <div className=" flex justify-center items-center">
@@ -57,7 +67,7 @@ export function Location() {
         </div>
 
         {open === true ? (
-          <div className="flex flex-col absolute top-[0.2rem] left-[1.5rem] w-[29rem] h-[6rem] border-2 text-lg bg-white px-1">
+          <div className="flex flex-col absolute top-[0.2rem]  w-[29rem] h-[6rem] border-2 text-lg bg-white px-1">
             <div className=" flex justify-center items-center my-2">
               <div className="relative w-[17.8rem] mr-[1px] border h-[2rem] flex justify-between ">
                 <span className="ml-2">{firstName}</span>
@@ -122,6 +132,15 @@ export function Location() {
           </div>
         ) : null}
       </div>
+      {modal === true ? (
+        <dialog id="my_modal_1" className="modal">
+          <div className="modal-box">
+            <p className="flex justify-center py-2 text-xl text-orange-400">
+              구/군을 선택해 주세요
+            </p>
+          </div>
+        </dialog>
+      ) : null}
     </div>
   );
 }

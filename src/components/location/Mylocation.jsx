@@ -12,67 +12,11 @@ import jsonData from "../../json/objectData.json";
 
 export default function MyLocation() {
   const [loading, setLoading] = useState(false);
-  const [latLng, setLatLng] = useState([]);
-  const [nxny, setNxny] = useRecoilState(nxnyState);
+  const [, setLatLng] = useState([]);
+  const [, setNxny] = useRecoilState(nxnyState);
   const [, setOpen] = useRecoilState(locationOpenState);
   const [, setFirstName] = useRecoilState(firstNameState);
   const [, setSecondName] = useRecoilState(secondNameState);
-
-  // // const getPosition = () => {
-  // //   if (navigator.geolocation) {
-  // //     navigator.geolocation.getCurrentPosition((position) => {
-  // //       setLatLng([
-  // //         `${position.coords.latitude}`,
-  // //         `${position.coords.longitude}`,
-  // //       ]);
-  // //     });
-  // //   } else {
-  // //     setLatLng(latLng);
-  // //   }
-  // // };
-
-  // useEffect(() => {
-  //   const getPosition = async () => {
-  //     try {
-  //       if (navigator.geolocation) {
-  //         const position = await new Promise((res, rej) => {
-  //           navigator.geolocation.getCurrentPosition(res, rej);
-  //         });
-  //         console.log(position);
-  //         setLatLng([
-  //           `${position?.coords.latitude}`,
-  //           `${position?.coords.longitude}`,
-  //         ]);
-  //       } else {
-  //         console.error("suppoerted error");
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //     //   if (navigator.geolocation) {
-  //     //     navigator.geolocation.getCurrentPosition((position) => {
-  //     //       setLatLng([
-  //     //         `${position.coords.latitude}`,
-  //     //         `${position.coords.longitude}`,
-  //     //       ]);
-  //     //     });
-  //     //   } else {
-  //     //     setLatLng(latLng);
-  //     //   }
-  //   };
-  //   getPosition();
-  // }, [nxny]);
-  // const myLocationClick = () => {
-  // const convert = Convert("toXY", latLng[0], latLng[1]);
-  //   const nx = convert?.x;
-  //   const ny = convert?.y;
-  //   const locationName = jsonData.find((x) => x.nx === nx && x.ny === ny);
-  //   setNxny(`${nx}`, `${ny}`);
-  //   setFirstName(locationName.first);
-  //   setSecondName(locationName.second);
-  //   setOpen(false);
-  // };
-  // console.log(latLng);
   const getPosition = async () => {
     try {
       if (navigator.geolocation) {
