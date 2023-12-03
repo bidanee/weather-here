@@ -30,19 +30,19 @@ export default function OneDays() {
           (x) => currentHour() < x.fcstTime || x.fcstDate > base_date
         );
         const tmpDataSet = dataSet
-          .filter((x) => x.category === "TMP")
+          ?.filter((x) => x.category === "TMP")
           .slice(0, 12);
         const oneDayData = {};
         oneDayData["tmp"] = tmpDataSet.map((x) => x.fcstValue);
 
         const popDataSet = dataSet
-          .filter((x) => x.category === "POP")
+          ?.filter((x) => x.category === "POP")
           .slice(0, 12);
 
         oneDayData["pop"] = popDataSet.map((x) => x.fcstValue);
 
         const rehDataSet = dataSet
-          .filter((x) => x.category === "REH")
+          ?.filter((x) => x.category === "REH")
           .slice(0, 12);
 
         oneDayData["reh"] = rehDataSet.map((x) => x.fcstValue);
