@@ -11,7 +11,7 @@ export default function Main() {
           <div className="flex items-center border-black bg-blue-800 w-[6rem] rounded-full p-1 mr-4">
             <img
               className="w-4 mr-2 rounded-full"
-              src="public/img/korea.jpg"
+              src="public/img/korea.png"
               alt="Korea Meteorological Administration"
             />
             <span className=" text-xs text-white">기상청 제공</span>
