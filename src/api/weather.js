@@ -44,7 +44,7 @@ export const timeTransform = () => {
 export const getWeatherInfo = async (base_date, base_time, nx, ny) => {
   const response = await weatherAPI({
     params: {
-      serviceKey: import.meta.env.VITE_API_KEY,
+      serviceKey: import.meta.env.VITE_REACT_APP_API_KEY,
       numOfRows: "288",
       pageNo: "1",
       base_date: base_date,
@@ -61,7 +61,7 @@ export const getWeatherInfo = async (base_date, base_time, nx, ny) => {
 export const getThreeDaysInfo = async (base_date, base_time, nx, ny) => {
   const response = await weatherAPI({
     params: {
-      serviceKey: import.meta.env.VITE_API_KEY,
+      serviceKey: import.meta.env.VITE_REACT_APP_API_KEY,
       numOfRows: "1000",
       pageNo: "1",
       base_date: base_date,
