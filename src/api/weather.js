@@ -8,7 +8,8 @@ export const timeTransform = () => {
   const current = new Date(Date.now() - 1000 * 60 * 60);
   const hour = current.getHours();
   const day = current.getDate();
-  let date = `${current.getFullYear()}${current.getMonth() + 1}${
+  const month = current.getMonth() + 1;
+  let date = `${current.getFullYear()}${month < 10 ? `0${month}` : month}${
     day < 10 ? `0${day}` : day
   }`;
   if (hour === 0 || hour === 1) {
